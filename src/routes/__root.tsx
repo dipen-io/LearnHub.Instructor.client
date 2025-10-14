@@ -15,20 +15,26 @@ interface MyRouterContext {
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
     <>
-      <Header />
-      <Outlet />
-      <TanStackDevtools
-        config={{
-          position: 'bottom-right',
-        }}
-        plugins={[
-          {
-            name: 'Tanstack Router',
-            render: <TanStackRouterDevtoolsPanel />,
-          },
-          TanStackQueryDevtools,
-        ]}
-      />
+      <div className="h-[100vh] flex gap-0 justify-start px-4 py-6 bg-green-600">
+        <Header />
+
+        {/* Main content area */}
+        <div className="h-[95vh] flex-1 bg rounded-2xl p-6 text-xl overflow-y-auto">
+          <Outlet />
+        </div>
+        <TanStackDevtools
+          config={{
+            position: 'bottom-right',
+          }}
+          plugins={[
+            {
+              name: 'Tanstack Router',
+              render: <TanStackRouterDevtoolsPanel />,
+            },
+            TanStackQueryDevtools,
+          ]}
+        />
+      </div>
     </>
   ),
 })

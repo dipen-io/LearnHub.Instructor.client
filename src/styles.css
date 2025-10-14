@@ -145,4 +145,40 @@ code {
     --breakpoint-md: 768px;
     --breakpoint-lg: 967px;
     --breakpoint-xl: 1280px;
+
+    --color-bg: oklch(0.882 0.084 248.35); /* Light blue (#bde0fe) */
+    --color-text: oklch(0.2 0 0);          /* Dark text */
+     
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --color-bg: oklch(0.1714 0.0263 220.93); /* Deep teal (#00171f) */
+  --color-text: oklch(0.882 0.084 248.35); /* Light text */
+}
+
+/* Navy Theme */
+[data-theme="navy"] {
+  --color-bg: oklch(0.3286 0.0352 265.46); /* Navy (#293241) */
+  --color-text: oklch(0.882 0.084 248.35); /* Light text */
+}
+
+/* Midnight Theme */
+[data-theme="midnight"] {
+  --color-bg: oklch(0.2126 0.0234 260.25); /* Midnight (#0b132b) */
+  --color-text: oklch(0.882 0.084 248.35); /* Light text */
+}
+
+/* Dark grayish blue  */
+[data-theme="grayish"] {
+  --color-bg: oklch(0.5443 0.00881 256.11);
+  --color-text: oklch(91.693% 0.01395 258.449);
+}
+
+.bg {
+  background-color: var(--color-bg);
+}
+
+.text {
+  color: var(--color-text);
 }
