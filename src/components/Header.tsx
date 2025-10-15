@@ -1,20 +1,32 @@
 import { Link, useMatchRoute } from "@tanstack/react-router";
 import ThemeSwitcher from "./ThemeSwitcher";
+import { Home, Video, Settings, X } from "lucide-react";
 
-export default function Sidebar() {
+export default function Sidebar({isOpen, setIsOpen}) {
   const matchRoute = useMatchRoute();
 
   const navItems = [
-    { label: "Home", to: "/" },
-    { label: "Video", to: "/video" },
-    { label: "Setting", to: "/setting" },
+    { Icons: Home, label: "Home", to: "/" },
+    { Icons: Video,  label: "Video", to: "/video" },
+    { Icons: Settings, label: "Setting", to: "/setting" },
   ];
 
   return (
-    <div className="w-52 mt-4 relative">
-      <h1 className="text-3xl font-bold text-gray-700">COURSEHUB</h1>
-      <nav className="text-lg py-5 space-y-1 relative">
-        {navItems.map(({ label, to }) => {
+    <>
+    <div
+    className={`
+        bg-green-600 text-white p-4 h-full
+        fixed top-0 left-0 w-64 z-40
+        transition-transform duration-300 ease-in-out
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+        md:relative md:translate-x-0 md:w-52 md:bg-transparent md:p-0
+      `}>
+        <div className="flex gap-4 items-center">
+            <h1 className="text-3xl font-bold text-gray-700">COURSEHUB</h1>
+            <span className="ml-2 bg-slate-700 md:hidden" onClick={() => setIsOpen(false)}>< X/></span>
+        </div>
+      <nav className="text-lg py-5 space-y-1">
+        {navItems.map(({ label, Icons, to }) => {
           const isActive = matchRoute({ to, fuzzy: false });
           return (
             <Link
@@ -26,14 +38,19 @@ export default function Sidebar() {
                   : "text-white hover:bg-green-500 hover:rounded-l-full"
               }`}
             >
-              {label}
+            <div className="flex gap-3 items-center" onClick={() => setIsOpen(false)}>
+                <Icons size={20}/>
+                {label}
+
+            </div>
             </Link>
           );
         })}
       </nav>
-      <div className="absolute left-10 bottom-0">
+      <div className="absolute left-5 bottom-5">
         <ThemeSwitcher />
       </div>
     </div>
+   </>
   );
 }
