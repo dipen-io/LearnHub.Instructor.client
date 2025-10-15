@@ -1,6 +1,7 @@
 import { Link, useMatchRoute } from "@tanstack/react-router";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { Home, Video, Settings, X } from "lucide-react";
+import LoginButtion from "./LogoutBtn";
 
 export default function Sidebar({isOpen, setIsOpen}) {
   const matchRoute = useMatchRoute();
@@ -47,6 +48,7 @@ bg-green-600
             </Link>
           );
         })}
+        <LoginButtion />
       </nav>
       <div className="absolute left-5 bottom-5">
         <ThemeSwitcher />
