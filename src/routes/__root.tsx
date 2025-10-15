@@ -21,7 +21,8 @@ export const Route = createRootRouteWithContext<MyRouterContext>()
 
    return(
      <>
-      <div className="h-[100vh] flex gap-0 justify-start md:px-4 md:py-6 md:bg-green-600">
+      <div className="h-[100vh] flex gap-0 justify-start md:px-4 md:py-6
+        md:bg-gradient-to-r md:from-green-400 md:to-blue-500">
         {/* Sidebar */}
         <Header isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
 

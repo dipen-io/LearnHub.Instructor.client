@@ -15,7 +15,8 @@ export default function Sidebar({isOpen, setIsOpen}) {
     <>
     <div
     className={`
-        bg-green-600 text-white p-4 h-full
+bg-green-600
+        text-blue-200 md:text-black font-semibold  p-4 h-full
         fixed top-0 left-0 w-64 z-40
         transition-transform duration-300 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
@@ -34,8 +35,8 @@ export default function Sidebar({isOpen, setIsOpen}) {
               to={to}
               className={`font-stretch-extra-expanded block px-4 py-3 relative font-medium transition-all duration-200 ${
                 isActive
-                  ? "bg text-[var(--color-text)] rounded-l-full"
-                  : "text-white hover:bg-green-500 hover:rounded-l-full"
+                  ? "bg-black text-white rounded-l-full"
+                  : "hover:rounded-l-full hover:bg-gray-200"
               }`}
             >
             <div className="flex gap-3 items-center" onClick={() => setIsOpen(false)}>
