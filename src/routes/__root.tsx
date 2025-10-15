@@ -27,7 +27,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()
         <Header isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
 
         {/* Main content area */}
-        <main className="md:h-[95vh] flex-1 bg md:rounded-2xl p-6 text-xl overflow-y-auto">
+        <main className="md:h-[95vh] flex-1 bg md:rounded-2xl md:p-6 p-2 text-xl overflow-y-auto">
             <button
                 onClick={() => setIsSidebarOpen(true)}
                 className='text-[var(--color-text)] md:hidden hover:bg-slate-800' aria-label='Open Menu'
