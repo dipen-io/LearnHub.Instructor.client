@@ -148,7 +148,26 @@ code {
 
     --color-bg: oklch(0.882 0.084 248.35); /* Light blue (#bde0fe) */
     --color-text: oklch(0.2 0 0);          /* Dark text */
-     
+
+
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scroll-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+}
+
+.animate-scroll-reverse {
+  animation: scroll-reverse 20s linear infinite;
 }
 
 /* Dark Theme */
@@ -181,4 +200,24 @@ code {
 
 .text {
   color: var(--color-text);
+}
+
+/* LOADER CSS */
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #3498db;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

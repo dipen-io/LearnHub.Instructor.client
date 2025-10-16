@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //GET THE URL
-const API_URL = import.meta.env.BASE_URL || "url not provided";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const axiosInstance = axios.create({
     baseURL: API_URL,

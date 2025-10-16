@@ -1,19 +1,36 @@
+import { Link } from "@tanstack/react-router";
 import { useAuthStore } from "../store/authStore";
+import { LogInIcon, LogOutIcon } from "lucide-react";
+import toast from "react-hot-toast";
 
 export default function LoginButtion() {
-    const { isLoggedIn, login, logout } = useAuthStore();
+    const { isLoggedIn, logout } = useAuthStore();
 
     if (isLoggedIn) {
-        return <button onClick={logout} className=" w-48 border border-black  hover:bg-slate-200 py-2 rounded-4xl">Log Out</button>
+    return (
+        <Link
+            to="/login"
+            className="w-44  rounded-4xl"
+                onClick={logout}
+        >
+        <span className="flex gap-3 px-3 hover:bg-slate-200 py-3 rounded-l-4xl">
+            <LogOutIcon size={20} />
+            Log Out
+        </span>
+        </Link>
+    )
+
     }
 
-    // When the user logs in via your API, call the login function from the store
-    const handleLogin = () => {
-      // ... after successful API call
-      const userData = { name: "John Doe" };
-      const token = "your_jwt_token";
-      login(userData, token);
-    };
-
-    return <button onClick={handleLogin} className="w-48 border border-blue-600  hover:bg-slate-200 py-2 rounded-4xl">Log In</button>;
+    return (
+        <Link
+            to="/login"
+            className="w-44  rounded-4xl"
+        >
+        <span className="flex gap-3 px-3 hover:bg-slate-200 py-3 rounded-l-4xl">
+            <LogInIcon size={20} />
+            Log In
+        </span>
+        </Link>
+    )
 }

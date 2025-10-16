@@ -1,13 +1,23 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useTheme } from '@/contexts/ThemeContext'
 import HeroSection from '@/features/home/HomeSection';
-// import ThemeSwitcher from '@/components/ThemeSwitcher'
+import Loader from '@/components/Loader';
+import { useAuthStore } from '@/store/authStore';
 
 export const Route = createFileRoute('/')({
   component: App,
 })
 
+
+
 function App() {
+    const { isLoggedIn } = useAuthStore();
+
+    if (!isLoggedIn) {
+        return <Loader />
+    }
+
+    // return <Loader />
   const {theme} = useTheme();
   return (
     <div className="text-[var(--color-text)]">
@@ -19,3 +29,5 @@ function App() {
     </div>
   )
 }
+
+

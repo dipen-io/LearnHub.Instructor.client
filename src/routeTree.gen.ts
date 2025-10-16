@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VideoRouteImport } from './routes/video'
+import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SettingRouteImport } from './routes/setting'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 
 const VideoRoute = VideoRouteImport.update({
@@ -18,9 +20,19 @@ const VideoRoute = VideoRouteImport.update({
   path: '/video',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingRoute = SettingRouteImport.update({
   id: '/setting',
   path: '/setting',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -31,31 +43,39 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
   '/setting': typeof SettingRoute
+  '/signup': typeof SignupRoute
   '/video': typeof VideoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
   '/setting': typeof SettingRoute
+  '/signup': typeof SignupRoute
   '/video': typeof VideoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
   '/setting': typeof SettingRoute
+  '/signup': typeof SignupRoute
   '/video': typeof VideoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/setting' | '/video'
+  fullPaths: '/' | '/login' | '/setting' | '/signup' | '/video'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/setting' | '/video'
-  id: '__root__' | '/' | '/setting' | '/video'
+  to: '/' | '/login' | '/setting' | '/signup' | '/video'
+  id: '__root__' | '/' | '/login' | '/setting' | '/signup' | '/video'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LoginRoute: typeof LoginRoute
   SettingRoute: typeof SettingRoute
+  SignupRoute: typeof SignupRoute
   VideoRoute: typeof VideoRoute
 }
 
@@ -68,11 +88,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VideoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/setting': {
       id: '/setting'
       path: '/setting'
       fullPath: '/setting'
       preLoaderRoute: typeof SettingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -87,7 +121,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LoginRoute: LoginRoute,
   SettingRoute: SettingRoute,
+  SignupRoute: SignupRoute,
   VideoRoute: VideoRoute,
 }
 export const routeTree = rootRouteImport

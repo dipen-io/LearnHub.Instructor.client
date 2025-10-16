@@ -48,8 +48,8 @@ bg-green-600
             </Link>
           );
         })}
-        <LoginButtion />
       </nav>
+       <LoginButtion />
       <div className="absolute left-5 bottom-5">
         <ThemeSwitcher />
       </div>
