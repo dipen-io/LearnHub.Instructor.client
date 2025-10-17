@@ -9,17 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as VideoRouteImport } from './routes/video'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SettingRouteImport } from './routes/setting'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as CourseRouteImport } from './routes/course'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CourseIdRouteImport } from './routes/course/$id'
 
-const VideoRoute = VideoRouteImport.update({
-  id: '/video',
-  path: '/video',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
@@ -35,59 +31,72 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CourseRoute = CourseRouteImport.update({
+  id: '/course',
+  path: '/course',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CourseIdRoute = CourseIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => CourseRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/course': typeof CourseRouteWithChildren
   '/login': typeof LoginRoute
   '/setting': typeof SettingRoute
   '/signup': typeof SignupRoute
-  '/video': typeof VideoRoute
+  '/course/$id': typeof CourseIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/course': typeof CourseRouteWithChildren
   '/login': typeof LoginRoute
   '/setting': typeof SettingRoute
   '/signup': typeof SignupRoute
-  '/video': typeof VideoRoute
+  '/course/$id': typeof CourseIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/course': typeof CourseRouteWithChildren
   '/login': typeof LoginRoute
   '/setting': typeof SettingRoute
   '/signup': typeof SignupRoute
-  '/video': typeof VideoRoute
+  '/course/$id': typeof CourseIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/setting' | '/signup' | '/video'
+  fullPaths: '/' | '/course' | '/login' | '/setting' | '/signup' | '/course/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/setting' | '/signup' | '/video'
-  id: '__root__' | '/' | '/login' | '/setting' | '/signup' | '/video'
+  to: '/' | '/course' | '/login' | '/setting' | '/signup' | '/course/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/course'
+    | '/login'
+    | '/setting'
+    | '/signup'
+    | '/course/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CourseRoute: typeof CourseRouteWithChildren
   LoginRoute: typeof LoginRoute
   SettingRoute: typeof SettingRoute
   SignupRoute: typeof SignupRoute
-  VideoRoute: typeof VideoRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/video': {
-      id: '/video'
-      path: '/video'
-      fullPath: '/video'
-      preLoaderRoute: typeof VideoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/signup': {
       id: '/signup'
       path: '/signup'
@@ -109,6 +118,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/course': {
+      id: '/course'
+      path: '/course'
+      fullPath: '/course'
+      preLoaderRoute: typeof CourseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -116,15 +132,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/course/$id': {
+      id: '/course/$id'
+      path: '/$id'
+      fullPath: '/course/$id'
+      preLoaderRoute: typeof CourseIdRouteImport
+      parentRoute: typeof CourseRoute
+    }
   }
 }
 
+interface CourseRouteChildren {
+  CourseIdRoute: typeof CourseIdRoute
+}
+
+const CourseRouteChildren: CourseRouteChildren = {
+  CourseIdRoute: CourseIdRoute,
+}
+
+const CourseRouteWithChildren =
+  CourseRoute._addFileChildren(CourseRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CourseRoute: CourseRouteWithChildren,
   LoginRoute: LoginRoute,
   SettingRoute: SettingRoute,
   SignupRoute: SignupRoute,
-  VideoRoute: VideoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

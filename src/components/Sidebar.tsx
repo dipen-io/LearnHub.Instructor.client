@@ -3,12 +3,17 @@ import ThemeSwitcher from "./ThemeSwitcher";
 import { Home, Video, Settings, X } from "lucide-react";
 import LoginButtion from "./LogoutBtn";
 
-export default function Sidebar({isOpen, setIsOpen}) {
+interface SidebarProps {
+    isOpen: boolean,
+    setIsOpen: (value: boolean) => void
+}
+
+export default function Sidebar({isOpen, setIsOpen}: SidebarProps) {
   const matchRoute = useMatchRoute();
 
   const navItems = [
     { Icons: Home, label: "Home", to: "/" },
-    { Icons: Video,  label: "Video", to: "/video" },
+    { Icons: Video,  label: "Course", to: "/course" },
     { Icons: Settings, label: "Setting", to: "/setting" },
   ];
 
