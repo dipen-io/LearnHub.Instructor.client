@@ -11,6 +11,7 @@ import { LoginUser } from '@/services/userServce'
 import { useMutation } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import { useRef } from 'react'
+import Loader2 from '@/components/Loader2'
 
 export const Route = createFileRoute('/login')({
     component: RouteComponent,
@@ -82,7 +83,7 @@ function RouteComponent() {
           <div className="grid w-full items-center gap-4">
 
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className='px-1 text-black font-bold text-xl'>Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -104,7 +105,7 @@ function RouteComponent() {
                 }
 
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" className='px-1 text-black font-bold text-xl'>Password</Label>
               <Input
                 id="password"
                 type="password"
@@ -124,8 +125,10 @@ function RouteComponent() {
                 }
             </div>
           </div>
-             <Button className='w-full py-6' onClick={handleLogin}>{loginMutation.isPaused ? "Logging In.." : "Log In"}</Button>
-         </div>
+              <Button className='w-full py-6' onClick={handleLogin}>{loginMutation.isPending ? "                    Logging In.." : "Log In"} <div className='ml-5 w-2 py-3'>
+               {loginMutation.isPending && <Loader2 />}
+             </div></Button>
+          </div>
         </div>
       </div>
     )

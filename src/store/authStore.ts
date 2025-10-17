@@ -50,7 +50,7 @@ export const useAuthStore = create<AuthState>()(
 
       logout: () => {
         set({ user: null, token: null, isLoggedIn: false, isAuthLoading: false }),
-        toast.success("Logout successfully");
+        toast.success("Logout Successfully!");
       }
     }),
     {
