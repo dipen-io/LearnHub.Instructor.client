@@ -20,7 +20,7 @@ export const Route = createFileRoute('/login')({
 interface UserDate {
     email: string,
     password: string,
-    Roles? : null,
+    Roles? :  string | null,
 }
 
 function RouteComponent() {

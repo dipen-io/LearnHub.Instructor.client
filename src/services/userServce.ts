@@ -17,5 +17,3 @@ export const VerifyUser = async() => {
     const { data } = await axiosInstance.get("auth/me");
     return data;
 }
-
-

@@ -1,3 +1,4 @@
+import { VerifyUser } from "@/services/userServce";
 import toast from "react-hot-toast";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -7,7 +8,6 @@ interface User {
   id: string;
   name: string;
   email: string;
-  // Add more fields if needed
 }
 
 // Define the full shape of your store
@@ -33,14 +33,24 @@ export const useAuthStore = create<AuthState>()(
       isAuthLoading: true,
 
       async initializeAuth() {
-        console.log("initializeAuth")
         const token = get().token;
         if (token) {
-          console.log("TOKEN: ", token);
+          try {
+                const response = await VerifyUser();
+                if (response?.success) {
+                    toast.success("verification success");
+                    console.log(response)
+                }
+            } catch (error: any) {
+                if(error?.status === 401) {
+                    toast.error( "token verification failed");
+                    // toast.error(error.response.data.message || "Unauthorized");
+                }
+                console.error("Error In Authemthicate", error);
+            }
           set({ isLoggedIn: true, isAuthLoading: false });
         } else {
           set({ isLoggedIn: false, isAuthLoading: false });
-            console.log("NO TOKEN");
         }
 
       },

@@ -38,14 +38,14 @@ const rootElement = document.getElementById('app')
 if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
-    <StrictMode>
-      <Toaster />
+    // <StrictMode>
       <ThemeProvider>
+       <Toaster />
       <TanStackQueryProvider.Provider {...TanStackQueryProviderContext}>
         <RouterProvider router={router} />
       </TanStackQueryProvider.Provider>
       </ThemeProvider>
-    </StrictMode>,
+    // </StrictMode>,
   )
 }
 

@@ -18,11 +18,13 @@ interface MyRouterContext {
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: function RootComponent() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-    const { initializeAuth, isLoggedIn, isAuthLoading } = useAuthStore()
+    const { initializeAuth, user, isLoggedIn, isAuthLoading } = useAuthStore()
     const router = useRouter()
-    console.log("RUNNING...!");
-
     const currentPath = router.state.location.pathname
+
+    if (user) {
+      console.log("USER : ", user);
+    }
 
     // Initialize auth state on mount
     useEffect(() => {
@@ -38,7 +40,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     }, [isLoggedIn, currentPath, router, isAuthLoading])
 
     if (isAuthLoading) {
-        console.log("isAuthLoading is running..")
         return (
            <div>
              <Loader />
@@ -48,7 +49,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
     // Public route (login)
     if (currentPath === '/login') {
-            console.log("CURRENT PUBLIC PATH");
       return (
         <main className="flex items-center justify-center">
           <Outlet />
