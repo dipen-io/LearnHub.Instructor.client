@@ -1,4 +1,4 @@
-import { useRouter,  } from "@tanstack/react-router";
+import { useRouter } from "@tanstack/react-router";
 import React, { useEffect } from "react";
 import { useAuthStore } from "@/store/authStore";
 

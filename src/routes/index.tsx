@@ -8,11 +8,8 @@ export const Route = createFileRoute('/')({
   component: App,
 })
 
-
-
 function App() {
     const { isLoggedIn } = useAuthStore();
-
     if (!isLoggedIn) {
         return <Loader />
     }

@@ -22,9 +22,9 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     const router = useRouter()
     const currentPath = router.state.location.pathname
 
-    if (user) {
-      console.log("USER : ", user);
-    }
+    // if (user) {
+    //   console.log("USER : ", user);
+    // }
 
     // Initialize auth state on mount
     useEffect(() => {

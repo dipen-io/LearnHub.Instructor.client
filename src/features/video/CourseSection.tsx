@@ -1,4 +1,7 @@
-import VideoCard from "@/components/card/VideoCard";
+import toast from "react-hot-toast";
+import CourseCard from "@/components/card/CourseCard";
+import Loader from "@/components/Loader";
+import { useCourses } from "@/hooks/useCourses";
 
 const videoData = [
     { id : 1, thumbnail: '/js.png', price: 549, title: 'Intro to React' },
@@ -11,12 +14,27 @@ const videoData = [
     { id : 8, thumbnail: '/js.png', price: 199, title: 'Fullstact GenAI Mastery' },
 ];
 
-export default function VideoSection() {
+export default function CourseSection() {
+    const { data: courses, isLoading, error, isSuccess} = useCourses();
+
+    if (isLoading){
+        return <div><Loader /></div>
+    }
+
+    if (isSuccess) {
+        toast.success(courses.message);
+    }
+
+    if (error) {
+        return <div>❌ An error occurred: {error.message}</div>;
+    }
+    console.log("Course DATA => : ", courses);
+
     return (
         <>
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-6 gap-2">
               {videoData.map((video) => (
-                 <VideoCard
+                 <CourseCard
                      id={video.id}
                      key={video.title}
                      thumbnail={video.thumbnail}

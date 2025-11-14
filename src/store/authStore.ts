@@ -8,6 +8,7 @@ interface User {
   id: string;
   name: string;
   email: string;
+  instructorID: string;
 }
 
 // Define the full shape of your store
@@ -39,12 +40,19 @@ export const useAuthStore = create<AuthState>()(
                 const response = await VerifyUser();
                 if (response?.success) {
                     toast.success("verification success");
-                    console.log(response)
+                    set((state) => ({
+                    user: {
+                      ...state.user!,
+                      instructorID: response.instructorData?.id,
+                     },
+                      isLoggedIn: true,
+                    }));
+                    console.log("VERIFY_USER", response)
                 }
             } catch (error: any) {
                 if(error?.status === 401) {
                     toast.error( "token verification failed");
-                    // toast.error(error.response.data.message || "Unauthorized");
+                    toast.error(error.response.data.message || "Unauthorized");
                 }
                 console.error("Error In Authemthicate", error);
             }

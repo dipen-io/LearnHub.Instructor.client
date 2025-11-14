@@ -1,10 +1,13 @@
-import { createFileRoute, useMatchRoute, Outlet, redirect } from '@tanstack/react-router';
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+// eslint-disable-next-line import/no-duplicates
+import { Outlet, createFileRoute, redirect, useMatchRoute } from '@tanstack/react-router';
+// eslint-disable-next-line import/no-duplicates
 import { useSearch } from '@tanstack/react-router';
-import { useTheme } from '@/contexts/ThemeContext';
-import VideoSection from '@/features/video/VideoSection';
-import { useAuthStore } from '@/store/authStore';
 import { useState } from 'react';
+import { useTheme } from '@/contexts/ThemeContext';
+import { useAuthStore } from '@/store/authStore';
 import AddCourse from '@/components/AddCourse';
+import CourseSection from '@/features/video/CourseSection';
 
 export const Route = createFileRoute('/course')({
   component: VideoComponent,
@@ -36,7 +39,8 @@ export default function VideoComponent() {
         <span className="flex gap-4 mb-1">
           <p>Course {title ? ` >  ${title}` : ""}</p>
           <span
-            className="rounded px-2 hover:bg-blue-400 hover:text-white cursor-pointer"
+            className="rounded px-2 hover:text-white border-t-2 font-bold hover:border-t-amber-800
+                cursor-pointer"
             onClick={handleAddCourse}
           >
             + Add Course
@@ -44,16 +48,15 @@ export default function VideoComponent() {
         </span>
 
         <div
-          className={`h-[0.5px] w-full ${
-            ['dark', 'navy', 'midnight'].includes(theme) ? 'bg-white' : 'bg-black'
-          }`}
+          className={`h-[0.5px] w-full ${['dark', 'navy', 'midnight'].includes(theme) ? 'bg-white' : 'bg-black'
+            }`}
         />
       </div>
 
       {/* Content section */}
       <div className={`${isAddCourseOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
 
-        {!isDetailPage && <VideoSection />}
+        {!isDetailPage && <CourseSection />}
         <Outlet />
       </div>
 
@@ -66,4 +69,3 @@ export default function VideoComponent() {
     </div>
   );
 }
-
