@@ -19,6 +19,7 @@ export const Route = createFileRoute('/login')({
 interface UserDate {
   email: string,
   password: string,
+  platform: "web",
   Roles?: "admin",
 }
 
