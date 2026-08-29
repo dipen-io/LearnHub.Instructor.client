@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SettingRouteImport } from './routes/setting'
+import { Route as RequestInstructorRouteImport } from './routes/request-instructor'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as CourseRouteImport } from './routes/course'
 import { Route as IndexRouteImport } from './routes/index'
@@ -24,6 +25,11 @@ const SignupRoute = SignupRouteImport.update({
 const SettingRoute = SettingRouteImport.update({
   id: '/setting',
   path: '/setting',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RequestInstructorRoute = RequestInstructorRouteImport.update({
+  id: '/request-instructor',
+  path: '/request-instructor',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -51,6 +57,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/course': typeof CourseRouteWithChildren
   '/login': typeof LoginRoute
+  '/request-instructor': typeof RequestInstructorRoute
   '/setting': typeof SettingRoute
   '/signup': typeof SignupRoute
   '/course/$id': typeof CourseIdRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/course': typeof CourseRouteWithChildren
   '/login': typeof LoginRoute
+  '/request-instructor': typeof RequestInstructorRoute
   '/setting': typeof SettingRoute
   '/signup': typeof SignupRoute
   '/course/$id': typeof CourseIdRoute
@@ -68,20 +76,36 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/course': typeof CourseRouteWithChildren
   '/login': typeof LoginRoute
+  '/request-instructor': typeof RequestInstructorRoute
   '/setting': typeof SettingRoute
   '/signup': typeof SignupRoute
   '/course/$id': typeof CourseIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/course' | '/login' | '/setting' | '/signup' | '/course/$id'
+  fullPaths:
+    | '/'
+    | '/course'
+    | '/login'
+    | '/request-instructor'
+    | '/setting'
+    | '/signup'
+    | '/course/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/course' | '/login' | '/setting' | '/signup' | '/course/$id'
+  to:
+    | '/'
+    | '/course'
+    | '/login'
+    | '/request-instructor'
+    | '/setting'
+    | '/signup'
+    | '/course/$id'
   id:
     | '__root__'
     | '/'
     | '/course'
     | '/login'
+    | '/request-instructor'
     | '/setting'
     | '/signup'
     | '/course/$id'
@@ -91,6 +115,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CourseRoute: typeof CourseRouteWithChildren
   LoginRoute: typeof LoginRoute
+  RequestInstructorRoute: typeof RequestInstructorRoute
   SettingRoute: typeof SettingRoute
   SignupRoute: typeof SignupRoute
 }
@@ -109,6 +134,13 @@ declare module '@tanstack/react-router' {
       path: '/setting'
       fullPath: '/setting'
       preLoaderRoute: typeof SettingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/request-instructor': {
+      id: '/request-instructor'
+      path: '/request-instructor'
+      fullPath: '/request-instructor'
+      preLoaderRoute: typeof RequestInstructorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -157,6 +189,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CourseRoute: CourseRouteWithChildren,
   LoginRoute: LoginRoute,
+  RequestInstructorRoute: RequestInstructorRoute,
   SettingRoute: SettingRoute,
   SignupRoute: SignupRoute,
 }

@@ -1,0 +1,24 @@
+login user is one 
+register
+after registation he/she can apply for instructor post
+
+
+the problme is 
+
+user register  then it save userType = user
+right so if the web can also login and send the request
+but after approval he can't login as a user or student in the app
+and the same for insturctor(web) if he is an student then he can't login to web
+
+and the thing is for login/register for both web/app user the same api so
+do i need to send any credentions like plantform or something while creating account or no needed
+
+what i want is if a user is just register then he is juset an user not student or instructor so can he can login in both web/app
+but when he becoem and student he cat login to web and when he become instructor he can't login in mobile app
+
+if (user.role=='instructor' && plantform == 'web') {
+    return res.status(403).json({message: 'Instructor can only log in vie web browser});
+}
+if (user.role=='student' && plantform == 'app') {
+    return res.status(403).json({message: 'Student can only only login in view mobile app});
+}
