@@ -1,5 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router"
 
+/*
+    This will render only when user is not requested 
+*/
 
 export const Route = createFileRoute('/request-instructor')({
     component: RouteComponent,
