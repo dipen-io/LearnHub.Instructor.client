@@ -3,16 +3,16 @@ import toast from "react-hot-toast";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-// Define your User type (adjust this to your backend model)
+
 interface User {
   id: string;
-  name: string;
+  fullName: string;
   email: string;
   instructorID: string;
   role: string;
 }
 
-// Define the full shape of your store
+
 interface AuthState {
   user: User | null;
   token: string | null;
@@ -47,6 +47,7 @@ export const useAuthStore = create<AuthState>()(
                   instructorID: response.instructorData?.id,
                 },
                 isLoggedIn: true,
+                isAuthLoading: false,
               }));
               console.log("VERIFY_USER", response)
             }
