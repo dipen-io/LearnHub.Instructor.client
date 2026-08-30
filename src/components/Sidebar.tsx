@@ -17,10 +17,11 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
     { Icons: Home, label: "Home", to: "/" },
     { Icons: Video, label: "Course", to: "/course" },
     { Icons: Settings, label: "Setting", to: "/setting" },
-    { Icons: CircleAlert, label: "Instructor", to: "/request-instructor", show: user?.role !== "user" },
+    { Icons: CircleAlert, label: "Instructor", to: "/request-instructor" },
     { Icons: User, label: "Profile", to: "/profile" }
   ];
 
+  console.log("user.role", user?.role);
   // here i want to add that or want to add an condition that 
   // if user.role == "user" then only i want to show the Instructor tab 
   // just tell me how can i hide or enable it here 
@@ -41,7 +42,10 @@ bg-green-600
           <span className="ml-2 bg-slate-700 md:hidden" onClick={() => setIsOpen(false)}>< X /></span>
         </div>
         <nav className="text-lg py-5 space-y-1">
-          {navItems.filter((item) => item.show !== false).map(({ label, Icons, to }) => {
+          {navItems.map(({ label, Icons, to }) => {
+            if (label === "instructor" && user?.role !== "user") {
+              return null;
+            }
             const isActive = matchRoute({ to, fuzzy: false });
             return (
               <Link
