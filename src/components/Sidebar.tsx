@@ -1,7 +1,8 @@
 import { Link, useMatchRoute } from "@tanstack/react-router";
 import ThemeSwitcher from "./ThemeSwitcher";
-import { Home, Video, Settings, X, CircleAlert } from "lucide-react";
+import { Home, Video, Settings, X, CircleAlert, User } from "lucide-react";
 import LoginButtion from "./LogoutBtn";
+import { useAuthStore } from "@/store/authStore";
 
 interface SidebarProps {
   isOpen: boolean,
@@ -10,13 +11,19 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   const matchRoute = useMatchRoute();
+  const { user } = useAuthStore();
 
   const navItems = [
     { Icons: Home, label: "Home", to: "/" },
     { Icons: Video, label: "Course", to: "/course" },
     { Icons: Settings, label: "Setting", to: "/setting" },
-    { Icons: CircleAlert, label: "Instructor", to: "/request-instructor" },
+    { Icons: CircleAlert, label: "Instructor", to: "/request-instructor", show: user?.role !== "user" },
+    { Icons: User, label: "Profile", to: "/profile" }
   ];
+
+  // here i want to add that or want to add an condition that 
+  // if user.role == "user" then only i want to show the Instructor tab 
+  // just tell me how can i hide or enable it here 
 
   return (
     <>
@@ -34,7 +41,7 @@ bg-green-600
           <span className="ml-2 bg-slate-700 md:hidden" onClick={() => setIsOpen(false)}>< X /></span>
         </div>
         <nav className="text-lg py-5 space-y-1">
-          {navItems.map(({ label, Icons, to }) => {
+          {navItems.filter((item) => item.show !== false).map(({ label, Icons, to }) => {
             const isActive = matchRoute({ to, fuzzy: false });
             return (
               <Link
