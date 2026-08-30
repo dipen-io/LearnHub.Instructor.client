@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { useTheme } from '@/contexts/ThemeContext'
 import HeroSection from '@/features/home/HomeSection';
 import Loader from '@/components/Loader';
@@ -9,19 +9,23 @@ export const Route = createFileRoute('/')({
 })
 
 function App() {
-    const { isLoggedIn } = useAuthStore();
-    if (!isLoggedIn) {
-        return <Loader />
-    }
+  const router = useRouter();
+  const { isLoggedIn, isAuthLoading } = useAuthStore();
+  if (isAuthLoading) {
+    return <Loader />
+  }
+  if (!isLoggedIn) {
+    router.navigate({ to: '/login' })
+  }
 
-    // return <Loader />
-  const {theme} = useTheme();
+  // return <Loader />
+  const { theme } = useTheme();
   return (
     <div className="text-[var(--color-text)]">
       <h1 className='mb-1'>Staticstics</h1>
-          <div className={`h-[0.5px] w-full ${theme =="dark" || theme =="navy"  || theme =="midnight" ? "bg-white" : "bg-black"}`}>
-            </div>
-            <HeroSection />
+      <div className={`h-[0.5px] w-full ${theme == "dark" || theme == "navy" || theme == "midnight" ? "bg-white" : "bg-black"}`}>
+      </div>
+      <HeroSection />
 
     </div>
   )
