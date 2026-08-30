@@ -9,6 +9,7 @@ interface User {
   name: string;
   email: string;
   instructorID: string;
+  role: string;
 }
 
 // Define the full shape of your store
@@ -37,25 +38,25 @@ export const useAuthStore = create<AuthState>()(
         const token = get().token;
         if (token) {
           try {
-                const response = await VerifyUser();
-                if (response?.success) {
-                    toast.success("verification success");
-                    set((state) => ({
-                    user: {
-                      ...state.user!,
-                      instructorID: response.instructorData?.id,
-                     },
-                      isLoggedIn: true,
-                    }));
-                    console.log("VERIFY_USER", response)
-                }
-            } catch (error: any) {
-                if(error?.status === 401) {
-                    toast.error( "token verification failed");
-                    toast.error(error.response.data.message || "Unauthorized");
-                }
-                console.error("Error In Authemthicate", error);
+            const response = await VerifyUser();
+            if (response?.success) {
+              toast.success("verification success");
+              set((state) => ({
+                user: {
+                  ...state.user!,
+                  instructorID: response.instructorData?.id,
+                },
+                isLoggedIn: true,
+              }));
+              console.log("VERIFY_USER", response)
             }
+          } catch (error: any) {
+            if (error?.status === 401) {
+              toast.error("token verification failed");
+              toast.error(error.response.data.message || "Unauthorized");
+            }
+            console.error("Error In Authemthicate", error);
+          }
           set({ isLoggedIn: true, isAuthLoading: false });
         } else {
           set({ isLoggedIn: false, isAuthLoading: false });
@@ -68,7 +69,7 @@ export const useAuthStore = create<AuthState>()(
 
       logout: () => {
         set({ user: null, token: null, isLoggedIn: false, isAuthLoading: false }),
-        toast.success("Logout Successfully!");
+          toast.success("Logout Successfully!");
       }
     }),
     {
