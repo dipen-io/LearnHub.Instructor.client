@@ -53,10 +53,12 @@ export const useAuthStore = create<AuthState>()(
             }
           } catch (error: any) {
             if (error?.status === 401) {
-              toast.error("token verification failed");
+              toast.error(error.response.data.error.message);
               toast.error(error.response.data.message || "Unauthorized");
             }
-            console.error("Error In Authemthicate", error);
+            console.error("Error In Authenticate: ", error);
+            set({ isLoggedIn: false, isAuthLoading: false });
+            return;
           }
           set({ isLoggedIn: true, isAuthLoading: false });
         } else {
