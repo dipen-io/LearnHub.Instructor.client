@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InstructorRequestForm from "@/components/InstructorRequestForm";
+import { CheckInstructorStatus } from "@/services/userServce";
+import { useAuthStore } from "@/store/authStore";
+import PendingInstructorRequest from "@/components/PendingInstructorRequest";
 
 export const Route = createFileRoute("/request-instructor")({
     component: RouteComponent,
@@ -8,6 +11,48 @@ export const Route = createFileRoute("/request-instructor")({
 
 function RouteComponent() {
     const [showForm, setShowForm] = useState(false);
+
+    const { user } = useAuthStore();
+
+
+    const [isLoading, setIsLoading] = useState(true);
+    const [isPending, setIsPending] = useState(false);
+    useEffect(() => {
+        if (!user?.id) return;
+        const checkStatus = async () => {
+            try {
+                setIsLoading(true);
+                const data = await CheckInstructorStatus(user.id);
+                if (data?.approvalStatus === "pending") {
+                    setIsPending(true);
+                }
+                else {
+                    setIsPending(false);
+                }
+            } catch (error) {
+                console.error("Failed to check instructor status:", error);
+                setIsPending(false);
+            } finally { setIsLoading(false); }
+        };
+        checkStatus();
+    }, [user?.id]);
+
+    // Loading state 
+    if (isLoading) {
+        return (
+            <div className="flex min-h-[60vh] items-center justify-center">
+                <div className="flex flex-col items-center gap-3">
+                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-cyan-200 border-t-cyan-900" />
+                    <p className="text-sm text-gray-500"> Checking your instructor status... </p>
+                </div>
+            </div>
+        );
+    }
+
+    // Pending request 
+    if (isPending) {
+        return <PendingInstructorRequest />;
+    }
 
     return (
         <>
