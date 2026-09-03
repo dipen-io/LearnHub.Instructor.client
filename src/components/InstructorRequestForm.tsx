@@ -1,8 +1,10 @@
 
 // components/InstructorRequestForm.tsx
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
+import { RequestInstructor, CheckInstructorStatus } from "@/services/userServce";
+import { useAuthStore } from "@/store/authStore";
 
 interface InstructorRequestFormProps {
     onClose: () => void;
@@ -24,6 +26,8 @@ export default function InstructorRequestForm({
 
     const isDark = theme === "dark";
 
+
+
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
@@ -33,13 +37,28 @@ export default function InstructorRequestForm({
         });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        console.log(formData);
+        const payload = {
+            expertise: formData.expertise,
+            bio: formData.bio,
+            experience: formData.experience,
+            reason: formData.reason,
+            socialLinks: {
+                website: formData.portfolioUrl || undefined,
+                linkedin: formData.linkedinUrl || undefined,
+            },
+        };
+
+        console.log("PAYLOAD:", payload);
 
         // API call here
+        const response = await RequestInstructor(payload);
+        console.log("RESPONSE: ", response);
     };
+
+
 
     const inputClass = `
         w-full rounded-xl border px-4 py-3 text-sm
@@ -109,8 +128,8 @@ export default function InstructorRequestForm({
 
                             <p
                                 className={`mt-1 text-sm ${isDark
-                                        ? "text-gray-400"
-                                        : "text-gray-500"
+                                    ? "text-gray-400"
+                                    : "text-gray-500"
                                     }`}
                             >
                                 Share your knowledge and teach others.
@@ -149,8 +168,8 @@ export default function InstructorRequestForm({
                     >
                         <p
                             className={`text-sm leading-6 ${isDark
-                                    ? "text-cyan-100"
-                                    : "text-cyan-900"
+                                ? "text-cyan-100"
+                                : "text-cyan-900"
                                 }`}
                         >
                             Tell us about your skills and experience. Our team
@@ -167,8 +186,8 @@ export default function InstructorRequestForm({
                                 </h3>
                                 <p
                                     className={`mt-1 text-xs ${isDark
-                                            ? "text-gray-500"
-                                            : "text-gray-400"
+                                        ? "text-gray-500"
+                                        : "text-gray-400"
                                         }`}
                                 >
                                     Tell us about your teaching expertise.
@@ -250,8 +269,8 @@ export default function InstructorRequestForm({
 
                                 <p
                                     className={`mt-1 text-xs ${isDark
-                                            ? "text-gray-500"
-                                            : "text-gray-400"
+                                        ? "text-gray-500"
+                                        : "text-gray-400"
                                         }`}
                                 >
                                     Help us understand why you want to teach.
@@ -288,8 +307,8 @@ export default function InstructorRequestForm({
 
                                 <p
                                     className={`mt-1 text-xs ${isDark
-                                            ? "text-gray-500"
-                                            : "text-gray-400"
+                                        ? "text-gray-500"
+                                        : "text-gray-400"
                                         }`}
                                 >
                                     Optional, but they can help us review your
