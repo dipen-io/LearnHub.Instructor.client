@@ -1,5 +1,4 @@
 import { axiosInstance } from "@/lib/axios";
-import axios from "axios";
 
 // LOGIN USER
 export const LoginUser = async (userData: any) => {
@@ -26,7 +25,7 @@ export const RequestInstructor = async (datas: { expertise: string; bio: string;
 }
 
 // CHECK INSTRUCTOR REQUEST
-export const CheckInstructorStatus = async (id: number) => {
+export const CheckInstructorStatus = async (id: string) => {
     const { data } = await axiosInstance.get(`users/check-instructor/${id}`);
     return data;
 }
