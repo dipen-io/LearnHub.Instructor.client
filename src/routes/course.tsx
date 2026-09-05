@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useAuthStore } from '@/store/authStore';
 import AddCourse from '@/components/AddCourse';
-import CourseSection from '@/features/video/CourseSection';
+import CourseSection from '@/features/course/CourseSection';
 
 export const Route = createFileRoute('/course')({
   component: VideoComponent,
