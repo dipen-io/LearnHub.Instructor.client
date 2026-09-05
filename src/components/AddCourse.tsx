@@ -109,8 +109,10 @@ export default function AddCourse({ onClose }: AddCourseProps) {
         limit: 5,
       }),
 
-    enabled: !!debouncedQuery,
+    // enabled: !!debouncedQuery,
+    enabled: showDropdown
   });
+
 
   // --------------------------------------------------
   // Normal input change
