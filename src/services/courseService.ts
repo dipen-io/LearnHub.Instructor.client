@@ -17,9 +17,22 @@ interface CourseFormData {
     promoVideoUrl: File | null;
 }
 
+interface GetCoursesParams {
+    cursor?: string;
+    limit?: string;
+    sort?: string;
+    search?: string;
+    min_price?: string;
+    max_price?: string;
+    category?: string;
+}
+
 // GET ALL COURSES :
-export const getCourses = async () => {
-    const { data } = await axiosInstance.get("/course");
+export const getCourses = async (params: GetCoursesParams = {}) => {
+    const cleanParams = Object.fromEntries(
+        Object.entries(params).filter(([, v]) => v !== undefined && v !== null && v !== "")
+    );
+    const { data } = await axiosInstance.get("/course", { params: cleanParams });
     console.log("api/v1/course", data);
     return data;
 }
@@ -45,7 +58,6 @@ export const createCourse = async (courseData: CourseFormData, instructorId: num
     const url = `/course/new?instructorId=${encodeURIComponent(instructorId)}`;
     // const { data } = await axiosInstance.post(`/course/new` ,formData);
     const { data } = await axiosInstance.post(url, formData);
-    console.log("what is not found", data);
     return data;
 }
 

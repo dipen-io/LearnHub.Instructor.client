@@ -1,25 +1,51 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { getCourses } from "@/services/courseService";
 
 interface Course {
-    id: number;
+    id: string;
     courseTitle: string;
-    //...
+    courseThumbnail: string;
+    isActive: boolean;
+    tags: string[];
+    price: string;
+    discount: string | null;
+    description: string;
+    instructor: Instructor;
 }
 
-export const useCourses = () => {
-    return useQuery({
-        // 1. Query Key: Unique key for caching and invalidation
-        // Use an array, often with the endpoint/resource name.
-        queryKey: ['courses'],
+interface UseCoursesOptions {
+    limit?: string;
+    sort?: string;
+    search?: string;
+    min_price?: string;
+    max_price?: string;
+    category?: string;
+}
 
-        // 2. Query Function: The asynchronous function that fetches the data
-        queryFn: getCourses,
+interface CourseResponse {
+    data: Course[];
+    pagination: { next_cursor: string | null; has_more: boolean };
+    applied: unknown;
+}
 
-        // 3. Optional: Configure caching/stale time if needed
-        // staleTime: 1000 * 60 * 5, // Data is fresh for 5 minutes
+interface Instructor {
+    instructorId: number;
+    fullName: string;
+    expertise: string;
+    socialLinks: { website?: string; linkedin?: string };
+}
 
-        // 4. Select/Transform data (optional)
-        // select: (data) => data.map(course => ({...course, modified: true}))
+export const useCourses = (filters: UseCoursesOptions = {}) => {
+    return useInfiniteQuery<CourseResponse>({
+        queryKey: ['courses', filters],
+        queryFn: ({ pageParam }) =>
+            getCourses({
+                ...filters,
+                cursor: pageParam ?? undefined,
+            }),
+
+        initialPageParam: undefined as string | undefined,
+        getNextPageParam: (lastPage) =>
+            lastPage.pagination.has_more ? lastPage.pagination.next_cursor ?? undefined : undefined
     })
 }
