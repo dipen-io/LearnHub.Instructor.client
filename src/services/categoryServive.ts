@@ -10,8 +10,8 @@ export interface Category {
 }
 
 // Get Category
-export const getCategory = async(params: GetCategoryParams): Promise<Category[]>  => {
-    const { search ="", limit } =  params;
+export const getCategory = async (params: GetCategoryParams): Promise<Category[]> => {
+    const { search = "", limit } = params;
     const query = new URLSearchParams();
     if (search) query.append("search", search);
     if (limit) query.append("limit", String(limit));
